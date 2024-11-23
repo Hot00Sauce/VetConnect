@@ -1,0 +1,66 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7d9a8;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ff7300;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.navbar .logo {
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 2rem;
+}
+
+.navbar .searchBar {
+    margin-left: 3rem;
+}
+
+.navbar .searchBar input {
+    width: 10rem;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+}
+
+.navigation {
+    list-style: none;
+    display: flex;
+    margin-left: 14rem;
+    gap: 3rem;
+}
+
+.profile {
+    display: flex;
+    margin-left: 18rem;
+    gap: 10px;
+}
+
+.main-feed {
+    flex: 1;
+    padding: 15px;
+    margin: 0 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-feed .post {
+    background-color: #fff2e0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
