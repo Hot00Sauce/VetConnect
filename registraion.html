@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        /* Add basic styling here */
+    </style>
+</head>
+<body>
+    <h2>Sign Up</h2>
+    <form id="registrationForm" method="POST" action="register.php">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="role">Register As:</label><br>
+<select id="role" name="role" required>
+    <option value="" disabled selected>Select your role</option>
+    <option value="veterinarian">Veterinarian</option>
+    <option value="pet_owner">Pet Owner</option>
+</select><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script src="register.js"></script>
+</body>
+</html>
+
+</body>
+</html>
