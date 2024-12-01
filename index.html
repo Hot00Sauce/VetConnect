@@ -17,8 +17,20 @@
                 <li><a href="">Schedule</a></li>
             </ul>
 
-            <div class="profile"><a href=""><img src="" alt="user's profile"></a><span>Profile</span></div>
+            <ul id="togglePopup" class="profile-button">
+                <li><img src="./assets/profile-user-svgrepo-com.svg" alt="user's profile"></li>
+                <li class="Profiletext">Profile</li>
+            </ul>
         </div>
+
+    <!-- Side pop-up -->
+    <div id="sidePopup" class="popup">
+        <div class="profilePictureOnProfile"><img src="./assets/profile-user-svgrepo-com.svg" alt=""></div>
+        <h2 class="userName">Elizabeth Conjuring</h2>
+        <p>This is your side pop-up content. You can add more details here.</p>
+        <div class="paymentButton"><h3>Payment</h3></div>
+        <div class="logoutButton"><h3>Logout</h3></div>
+    </div>
 
         <div class="mainContent">
             <div class="petOwners">
@@ -34,5 +46,7 @@
 <div class="footer">
     © 2024 OrangeBook. All rights reserved.
 </div>
+
+<script src="register.js"></script>
 </body>
 </html>
