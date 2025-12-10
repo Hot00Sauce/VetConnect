@@ -3,51 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>VetConnect - Login</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <form id="loginForm" action="login_backend.php" method="POST">
-    <h2>Login</h2>
+  <div class="form-container">
+    <h2>Login to VetConnect</h2>
     
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <form id="loginForm" action="login_backend.php" method="POST">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
 
-    <button type="submit">Login</button>
-  </form>
+      <button type="submit">Login</button>
+      
+      <div class="form-link">
+        <p>Don't have an account? <a href="index.php">Register here</a></p>
+      </div>
+    </form>
+  </div>
 
 </body>
 </html>

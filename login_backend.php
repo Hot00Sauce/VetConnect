@@ -34,8 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             header("Location: Pet_OwnerDashboard.php");
         }
+        exit();
     } else {
-        echo "Invalid email or password.";
+        echo "<script>alert('Invalid email or password. Please try again.'); window.location.href='login.php';</script>";
     }
 }
 

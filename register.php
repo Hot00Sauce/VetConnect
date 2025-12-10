@@ -28,18 +28,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt_check->get_result();
 
     if ($result->num_rows > 0) {
-        echo "Email is already registered.";
+        echo "<script>alert('Email is already registered. Please use a different email or login.'); window.location.href='index.php';</script>";
     } else {
-        // Insert the user data into the database
-        $sql = "INSERT INTO users (role, name, email, password) VALUES (?, ?, ?, ?)";
+        // Insert the user data into the database with default profile values
+        $default_profile_name = $name;
+        $default_profile_picture = "assets/profile-user-svgrepo-com.svg";
+        
+        $sql = "INSERT INTO users (role, name, email, password, profile_name, profile_picture) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $role, $name, $email, $password);
+        $stmt->bind_param("ssssss", $role, $name, $email, $password, $default_profile_name, $default_profile_picture);
 
         if ($stmt->execute()) {
-            echo "Registration successful! You can now login.";
-            header("Location: login.php");
+            echo "<script>alert('Registration successful! You can now login.'); window.location.href='login.php';</script>";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "<script>alert('Error: " . $conn->error . "'); window.history.back();</script>";
         }
     }
 

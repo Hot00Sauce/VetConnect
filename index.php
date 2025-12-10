@@ -3,64 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration Form</title>
+  <title>VetConnect - Registration</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-    }
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #28a745;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #218838;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <form id="registrationForm" action="register.php" method="POST">
-    <h2>Registration Form</h2>
+  <div class="form-container">
+    <h2>Register for VetConnect</h2>
     
-    <label for="role">Select Role:</label>
-    <select id="role" name="role" required>
-      <option value="">Choose Role</option>
-      <option value="Veterinarian">Veterinarian</option>
-      <option value="PetOwner">Pet Owner</option>
-    </select>
+    <form id="registrationForm" action="register.php" method="POST">
+      <label for="role">Select Role:</label>
+      <select id="role" name="role" required>
+        <option value="">Choose Role</option>
+        <option value="Veterinarian">Veterinarian</option>
+        <option value="PetOwner">Pet Owner</option>
+      </select>
 
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
 
-    <button type="submit">Register</button>
-  </form>
+      <button type="submit">Register</button>
+      
+      <div class="form-link">
+        <p>Already have an account? <a href="login.php">Login here</a></p>
+      </div>
+    </form>
+  </div>
 
   <script src="formValidation.js"></script>
 
