@@ -66,40 +66,25 @@ $schedules_result = $schedule_stmt->get_result();
             showMobilePanel('messages');
             return;
         }
-        
-        console.log('toggleToMessages called');
-        var messagesPanel = document.getElementById('messagesPanel');
-        var notificationsPanel = document.getElementById('notificationsPanel');
+        // Hide notifications, show messages
+        document.querySelector('.notification-rightSection').style.display = 'none';
+        document.querySelector('.message-rightSection').style.display = 'block';
         var messageToggle = document.getElementById('messageToggle');
         var notificationToggle = document.getElementById('notificationToggle');
-        
-        console.log('messagesPanel:', messagesPanel);
-        console.log('notificationsPanel:', notificationsPanel);
-        
-        if (notificationsPanel) notificationsPanel.classList.remove('active');
-        if (messagesPanel) messagesPanel.classList.add('active');
         if (notificationToggle) notificationToggle.classList.remove('active');
         if (messageToggle) messageToggle.classList.add('active');
     }
-    
     function toggleToNotifications() {
         // Check if mobile/tablet view
         if (window.innerWidth <= 1024) {
             showMobilePanel('notifications');
             return;
         }
-        
-        console.log('toggleToNotifications called');
-        var messagesPanel = document.getElementById('messagesPanel');
-        var notificationsPanel = document.getElementById('notificationsPanel');
+        // Hide messages, show notifications
+        document.querySelector('.notification-rightSection').style.display = 'block';
+        document.querySelector('.message-rightSection').style.display = 'none';
         var messageToggle = document.getElementById('messageToggle');
         var notificationToggle = document.getElementById('notificationToggle');
-        
-        console.log('messagesPanel:', messagesPanel);
-        console.log('notificationsPanel:', notificationsPanel);
-        
-        if (messagesPanel) messagesPanel.classList.remove('active');
-        if (notificationsPanel) notificationsPanel.classList.add('active');
         if (messageToggle) messageToggle.classList.remove('active');
         if (notificationToggle) notificationToggle.classList.add('active');
     }
@@ -246,8 +231,8 @@ $schedules_result = $schedule_stmt->get_result();
         </div>
 
         <!-- Right Section - Notifications and Messages -->
-        <div class="rightSection">
-            <!-- Notifications Panel -->
+        <div class="notification-rightSection" style="display: block;">
+            <!-- Notifications Panel (only notifications, no messages) -->
             <div id="notificationsPanel" class="rightPanel active">
                 <h2>Notifications</h2>
                 <div class="notificationsList">
@@ -274,42 +259,40 @@ $schedules_result = $schedule_stmt->get_result();
                 <?php endif; ?>
                 </div>
             </div>
-            
-            <!-- Messages Panel -->
-            <div id="messagesPanel" class="rightPanel">
+        </div>
+        <div class="message-rightSection" style="display: none;">
+            <!-- Messages Panel (only messages, no notifications) -->
+            <div id="messagesPanel" class="rightPanel active">
                 <h2>Messages</h2>
                 <div class="searchMessages">
                     <input type="text" placeholder="Search messages..." id="messageSearch">
                 </div>
                 <div class="messageList" id="messageList">
-                    <?php
-                    // For now, show empty state until messaging feature is implemented
-                    $message_result = null;
-                    
-                    if ($message_result && $message_result->num_rows > 0):
-                    ?>
-                        <?php while($contact = $message_result->fetch_assoc()): ?>
-                            <div class="messageContact">
-                                <img src="<?php echo htmlspecialchars($contact['profile_picture'] ?? 'assets/default-avatar.png'); ?>" alt="Contact">
-                                <div class="contactInfo">
-                                    <h4><?php echo htmlspecialchars($contact['profile_name'] ?? 'Unknown'); ?></h4>
-                                    <p class="lastMessage">Click to start a conversation...</p>
-                                </div>
-                                <span class="messageTime"></span>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <div class="emptyMessages">
-                            <div class="emptyIcon">&#128172;</div>
-                            <p>No conversations yet</p>
-                            <small>Click "Contact" on a client to start messaging</small>
-                        </div>
-                    <?php endif; ?>
-                    <?php
-                    // Close database connection after all queries are done
-                    $conn->close();
-                    ?>
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                        <p>Loading conversations...</p>
+                    </div>
                 </div>
+                <div class="chatPlaceholder">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">💬</div>
+                    <p>Select a conversation to start messaging</p>
+                </div>
+                <div class="chatArea">
+                    <div class="chatHeader">
+                        <!-- Will be populated by JS -->
+                    </div>
+                    <div class="chatMessages" id="chatMessages">
+                        <!-- Messages will be loaded here -->
+                    </div>
+                    <div class="chatInput">
+                        <input type="text" id="messageInput" placeholder="Type your message...">
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+                <?php
+                // Close database connection after all queries are done
+                $conn->close();
+                ?>
             </div>
         </div>
     </div>
@@ -383,6 +366,8 @@ $schedules_result = $schedule_stmt->get_result();
         © 2024 VetConnect. All rights reserved.
     </div>
 
+    <div style="display: none;" data-user-id="<?php echo $_SESSION['user_id']; ?>"></div>
     <script src="register.js"></script>
+    <script src="messaging.js"></script>
 </body>
 </html>
