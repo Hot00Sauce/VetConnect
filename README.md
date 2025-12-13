@@ -1,3 +1,58 @@
+# VetConnect Web Project
+
+## Features
+
+VetConnect is a web platform designed to connect pet owners with veterinarians, manage pet care, and streamline veterinary appointments. Below are the main features integrated into this project:
+
+### 1. User Authentication
+- Secure login and registration for pet owners and veterinarians
+- Session management to protect user data
+
+### 2. Pet Owner Dashboard
+- View and manage nearby veterinarians (location-based search)
+- Contact veterinarians directly from the dashboard
+- View and manage upcoming schedules and appointments
+- Receive notifications for upcoming appointments and important events
+
+### 3. Veterinarian Dashboard
+- (If implemented) Manage appointments and view pet owner requests
+- Profile management for veterinarians, including clinic details and location
+
+### 4. Real-Time Messaging System
+- Separate panels for notifications and messages
+- Toggle between notifications and messages with a clean, non-overlapping UI
+- Responsive design for desktop and mobile devices
+- Placeholder for real-time chat with veterinarians (future enhancement)
+
+### 5. Schedule Management
+- Add, edit, and view upcoming appointments
+- Select veterinarian, appointment type, and date/time
+- Receive reminders and urgent notifications for upcoming events
+
+### 6. Profile Customization
+- Upload and update profile pictures
+- Edit personal and clinic information
+- Set and update location for accurate veterinarian search
+
+### 7. Responsive UI
+- Mobile and desktop-friendly layout
+- Bottom navigation for mobile/tablet users
+- Side pop-up for profile management
+
+### 8. Security and Data Handling
+- Prepared statements for database queries to prevent SQL injection
+- User session validation for protected pages
+
+### 9. File Uploads
+- (If implemented) Upload and manage files such as profile pictures
+
+### 10. Modular Code Structure
+- Separate files for backend (PHP), frontend (HTML/CSS/JS), and assets
+- Organized folder structure for easy maintenance
+
+---
+
+For more details on setup and usage, see the QUICKSTART.md file.
 # VetConnect
 
 A web-based platform connecting pet owners with professional veterinarians.
