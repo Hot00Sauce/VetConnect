@@ -52,6 +52,13 @@ $schedules_result = $schedule_stmt->get_result();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <style>
+        @media (max-width: 1024px) {
+            .notification-rightSection {
+                display: none !important;
+            }
+        }
+        </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VetConnect - Veterinarian Dashboard</title>
@@ -61,9 +68,8 @@ $schedules_result = $schedule_stmt->get_result();
     <script>
     // Toggle functions - defined early so onclick handlers work
     function toggleToMessages() {
-        // Check if mobile/tablet view
         if (window.innerWidth <= 1024) {
-            showMobilePanel('messages');
+            showMobileMessagesPopup();
             return;
         }
         // Hide notifications, show messages
@@ -75,7 +81,6 @@ $schedules_result = $schedule_stmt->get_result();
         if (messageToggle) messageToggle.classList.add('active');
     }
     function toggleToNotifications() {
-        // Check if mobile/tablet view
         if (window.innerWidth <= 1024) {
             showMobilePanel('notifications');
             return;
@@ -88,13 +93,12 @@ $schedules_result = $schedule_stmt->get_result();
         if (messageToggle) messageToggle.classList.remove('active');
         if (notificationToggle) notificationToggle.classList.add('active');
     }
-    
+
     // Mobile panel pop-up functions
     function showMobilePanel(type) {
         var popup = document.getElementById('mobilePanelPopup');
         var header = document.getElementById('mobilePanelTitle');
         var body = document.getElementById('mobilePanelBody');
-        
         if (type === 'messages') {
             header.textContent = '✉️ Messages';
             body.innerHTML = document.getElementById('messagesPanel').innerHTML;
@@ -102,31 +106,81 @@ $schedules_result = $schedule_stmt->get_result();
             header.textContent = '🔔 Notifications';
             body.innerHTML = document.getElementById('notificationsPanel').innerHTML;
         }
-        
         popup.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
+
     function closeMobilePanel() {
         var popup = document.getElementById('mobilePanelPopup');
         popup.classList.remove('active');
         document.body.style.overflow = '';
     }
-    
-    // Start conversation with client
-    function startConversation(clientId, clientName) {
-        // Switch to Messages panel
-        toggleToMessages();
-        
-        // Scroll to top of message list
-        var messageList = document.getElementById('messageList');
-        if (messageList) {
-            messageList.scrollTop = 0;
-        }
-        
-        // Show notification to user
-        alert('Starting conversation with ' + clientName + '.\n\nMessaging feature coming soon!');
+
+    // --- Mobile Second Message Panel Popup Logic ---
+    // Show the message list popup (mobile)
+    function showMobileMessagesPopup() {
+        var popup = document.getElementById('mobilePanelPopup');
+        var header = document.getElementById('mobilePanelTitle');
+        var body = document.getElementById('mobilePanelBody');
+        header.textContent = '✉️ Messages';
+        body.innerHTML = document.getElementById('messagesPanel').innerHTML;
+        // Wait for conversations to load, then attach click handler to .messageItem
+        setTimeout(function() {
+            var items = body.querySelectorAll('.messageItem');
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // Optionally, you can extract conversation id/name here
+                    closeMobilePanel();
+                    showMobileSecondMessagePanel(item);
+                });
+            });
+        }, 600);
+        popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
+
+    // Show the second message panel popup (mobile)
+    function showMobileSecondMessagePanel(messageItem) {
+        var popup = document.getElementById('mobileSecondMessagePopup');
+        if (popup) {
+            // Optionally, populate chat header and messages from the selected conversation
+            var chatHeader = popup.querySelector('.chatHeader');
+            if (chatHeader && messageItem) {
+                // Try to get the conversation name from the messageItem
+                var name = messageItem.querySelector('.conversationName') ? messageItem.querySelector('.conversationName').textContent : 'Chat';
+                chatHeader.textContent = name;
+            }
+            // Optionally clear chat messages area
+            var chatMessages = popup.querySelector('#chatMessages');
+            if (chatMessages) {
+                chatMessages.innerHTML = '<div style="text-align:center;color:#888;padding:2rem;">No messages yet.</div>';
+            }
+            popup.classList.add('active');
+            popup.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Close the second message panel popup (mobile)
+    function closeMobileSecondMessagePanel() {
+        var popup = document.getElementById('mobileSecondMessagePopup');
+        if (popup) {
+            popup.classList.remove('active');
+            popup.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Add event for back button in second message panel (mobile)
+    document.addEventListener('DOMContentLoaded', function() {
+        var backBtn = document.querySelector('#mobileSecondMessagePopup .backToMessagesBtn');
+        if (backBtn) {
+            backBtn.onclick = function() {
+                closeMobileSecondMessagePanel();
+                showMobileMessagesPopup();
+            };
+        }
+    });
     </script>
 </head>
 <body>
@@ -277,24 +331,9 @@ $schedules_result = $schedule_stmt->get_result();
                     <div style="font-size: 4rem; margin-bottom: 1rem;">💬</div>
                     <p>Select a conversation to start messaging</p>
                 </div>
-                <div class="chatArea">
-                    <div class="chatHeader">
-                        <!-- Will be populated by JS -->
-                    </div>
-                    <div class="chatMessages" id="chatMessages">
-                        <!-- Messages will be loaded here -->
-                    </div>
-                    <div class="chatInput">
-                        <input type="text" id="messageInput" placeholder="Type your message...">
-                        <button onclick="sendMessage()">Send</button>
-                    </div>
-                </div>
-                <?php
-                // Close database connection after all queries are done
-                $conn->close();
-                ?>
             </div>
         </div>
+        <!-- The second-message-rightSection is now only rendered in the mobile popup below -->
     </div>
 
     <!-- Side pop-up -->
@@ -325,6 +364,94 @@ $schedules_result = $schedule_stmt->get_result();
             </div>
         </div>
     </div>
+
+    <!-- Mobile Second Message Panel Popup -->
+    <div id="mobileSecondMessagePopup" class="mobile-panel-popup" onclick="if(event.target === this) closeMobileSecondMessagePanel()">
+        <div class="mobile-panel-content">
+            <div class="mobile-panel-header">
+                <h2 id="mobileSecondPanelTitle">Chat</h2>
+                <button class="mobile-panel-close" onclick="closeMobileSecondMessagePanel()">×</button>
+            </div>
+            <div class="mobile-panel-body" id="mobileSecondPanelBody">
+                <div class="second-message-rightSection" style="display: block;">
+                    <div id="secondMessagesPanel" class="rightPanel active">
+                        <button class="backToMessagesBtn" onclick="closeMobileSecondMessagePanel(); showMobileMessagesPopup();" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            margin: 0.75rem 0 0 0.75rem;
+                            padding: 0.45rem 1.2rem;
+                            border: none;
+                            background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+                            color: #fff;
+                            border-radius: 24px;
+                            box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+                            cursor: pointer;
+                            font-size: 1.05rem;
+                            font-weight: 500;
+                            transition: background 0.2s, box-shadow 0.2s;
+                        "
+                        onmouseover="this.style.background='linear-gradient(90deg, #2196F3 0%, #4CAF50 100%)'; this.style.boxShadow='0 4px 16px rgba(33,150,243,0.15)';"
+                        onmouseout="this.style.background='linear-gradient(90deg, #4CAF50 0%, #2196F3 100%)'; this.style.boxShadow='0 2px 8px rgba(33,150,243,0.08)';"
+                        >
+                            <span style="font-size: 1.3rem; line-height: 1;">&#8592;</span>
+                            <span>Back to Messages</span>
+                        </button>
+                        <div class="chatArea" style="display: flex; flex-direction: column; height: 500px; max-height: 60vh; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden;">
+                            <div class="chatHeader">
+                                <!-- Will be populated by JS -->
+                            </div>
+                            <div class="chatMessages" id="chatMessages" style="flex: 1 1 auto; overflow-y: auto; padding: 1rem; min-height: 0;">
+                                <!-- Messages will be loaded here -->
+                            </div>
+                            <div class="chatInput">
+                                <input type="text" id="messageInput" placeholder="Type your message...">
+                                <button onclick="sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    /* True overlay for mobile second message popup */
+    #mobileSecondMessagePopup {
+        display: none;
+        position: fixed;
+        z-index: 1200;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.32);
+        align-items: center;
+        justify-content: center;
+    }
+    #mobileSecondMessagePopup.active {
+        display: flex !important;
+    }
+    #mobileSecondMessagePopup .mobile-panel-content {
+        background: #fff;
+        border-radius: 12px;
+        max-width: 98vw;
+        width: 100vw;
+        min-width: 0;
+        max-height: 98vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+    @media (max-width: 1024px) {
+        #mobileSecondMessagePopup .mobile-panel-content {
+            width: 100vw;
+            max-width: 100vw;
+            min-width: 0;
+        }
+        #mobileSecondMessagePopup .chatArea {
+            max-height: 60vh;
+        }
+    }
+    </style>
     
     <!-- Bottom Navigation for Mobile/Tablet -->
     <nav class="bottom-nav">

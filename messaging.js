@@ -1,3 +1,16 @@
+// Back to main message panel from second message panel
+function backToMessagesPanel() {
+    // Hide second message panel, show main message panel
+    var secondMsgPanel = document.querySelector('.second-message-rightSection');
+    var msgPanel = document.querySelector('.message-rightSection');
+    if (secondMsgPanel) secondMsgPanel.style.display = 'none';
+    if (msgPanel) msgPanel.style.display = 'block';
+    // Optionally update nav icon states
+    var messageToggle = document.getElementById('messageToggle');
+    var secondMessageToggle = document.getElementById('secondMessageToggle');
+    if (messageToggle) messageToggle.classList.add('active');
+    if (secondMessageToggle) secondMessageToggle.classList.remove('active');
+}
 // Messaging System
 let currentConversationId = null;
 let currentReceiverId = null;
@@ -56,8 +69,11 @@ function openConversation(conversationId, receiverId, receiverName, receiverPict
     currentConversationId = conversationId;
     currentReceiverId = receiverId;
 
-    // Update chat header - only show profile once with "Online" status
-    const chatHeader = document.querySelector('.chatHeader');
+    // Show the second message panel and hide others
+    toggleToSecondMessages();
+
+    // Update chat header in the second message panel
+    const chatHeader = document.querySelector('.second-message-rightSection .chatHeader');
     if (chatHeader) {
         chatHeader.innerHTML = `
             <img src="${receiverPicture}" alt="${receiverName}">
@@ -68,27 +84,26 @@ function openConversation(conversationId, receiverId, receiverName, receiverPict
         `;
     }
 
-    // Show chat area, hide placeholder
-    const chatPlaceholder = document.querySelector('.chatPlaceholder');
-    const chatArea = document.querySelector('.chatArea');
-
-    if (chatPlaceholder) {
-        chatPlaceholder.style.display = 'none';
-    }
-
+    // Show chat area in the second message panel
+    const chatArea = document.querySelector('.second-message-rightSection .chatArea');
     if (chatArea) {
         chatArea.classList.add('active');
         chatArea.style.display = 'flex';
     }
 
-    // Load messages
+    // Hide chat placeholder in the main message panel (if present)
+    const chatPlaceholder = document.querySelector('.chatPlaceholder');
+    if (chatPlaceholder) {
+        chatPlaceholder.style.display = 'none';
+    }
+
+    // Load messages into the second message panel
     loadMessages(conversationId);
 
-    // Start auto-refresh
+    // Remove auto-refresh: do not set interval for loading messages
     if (messageRefreshInterval) {
         clearInterval(messageRefreshInterval);
     }
-    messageRefreshInterval = setInterval(() => loadMessages(conversationId), 3000);
 }
 
 // Load messages for a conversation
@@ -241,3 +256,22 @@ window.addEventListener('beforeunload', function () {
         clearInterval(messageRefreshInterval);
     }
 });
+
+// Toggle to Second Messages Panel
+function toggleToSecondMessages() {
+    // Hide other panels
+    var notifPanel = document.querySelector('.notification-rightSection');
+    var msgPanel = document.querySelector('.message-rightSection');
+    var secondMsgPanel = document.querySelector('.second-message-rightSection');
+    if (notifPanel) notifPanel.style.display = 'none';
+    if (msgPanel) msgPanel.style.display = 'none';
+    if (secondMsgPanel) secondMsgPanel.style.display = 'block';
+
+    // Optionally update nav icon states if you add a nav icon for this panel
+    var messageToggle = document.getElementById('messageToggle');
+    var notificationToggle = document.getElementById('notificationToggle');
+    var secondMessageToggle = document.getElementById('secondMessageToggle');
+    if (messageToggle) messageToggle.classList.remove('active');
+    if (notificationToggle) notificationToggle.classList.remove('active');
+    if (secondMessageToggle) secondMessageToggle.classList.add('active');
+}
