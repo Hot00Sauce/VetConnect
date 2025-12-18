@@ -1,3 +1,329 @@
+.desktopChatMessages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.desktopChatMessages .message {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-end;
+    max-width: 70%;
+    margin-bottom: 0.5rem;
+}
+
+.desktopChatMessages .message.sent {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.desktopChatMessages .message.received {
+    align-self: flex-start;
+}
+
+.desktopChatMessages .messageBubble {
+    padding: 0.75rem 1.1rem;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    position: relative;
+    font-size: 0.95rem;
+    min-width: 60px;
+    max-width: 350px;
+    word-break: break-word;
+}
+
+.desktopChatMessages .message.sent .messageBubble {
+    background: linear-gradient(135deg, #FF6500, #FFAD60);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 18px;
+}
+
+.desktopChatMessages .message.received .messageBubble {
+    background: #fff;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 18px;
+}
+
+.desktopChatMessages .message img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.desktopChatMessages .messageTime {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    display: block;
+    margin-top: 0.2rem;
+    text-align: right;
+}
+
+.desktopChatInput {
+    padding: 1rem 1.5rem;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    gap: 0.8rem;
+    background: white;
+    flex-shrink: 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.desktopChatInput input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    background: #fafafa;
+}
+
+.desktopChatInput input:focus {
+    border-color: #FFAD60;
+    box-shadow: 0 0 0 3px rgba(255, 173, 96, 0.1);
+}
+
+.desktopChatInput button {
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, #FF6500, #FFAD60);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 101, 0, 0.10);
+}
+
+.desktopChatInput button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 101, 0, 0.18);
+}
+
+.desktopChatHeader {
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(to bottom, #FFF8F0, white);
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255, 101, 0, 0.04);
+}
+
+.desktopBackToMessagesBtn {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 24px;
+    font-size: 1.05rem;
+    border: none;
+    background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+    cursor: pointer;
+    padding: 0.45rem 1.2rem;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.desktopBackToMessagesBtn:hover {
+    background: linear-gradient(90deg, #2196F3 0%, #4CAF50 100%);
+}
+
+.desktop-second-message-rightSection {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    padding: 0;
+    height: 86vh !important;
+    width: 10vw !important;
+    /* Reduced width for desktop */
+    max-width: 520px;
+    min-width: 340px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    /* Remove position: relative or absolute for flex layout */
+    position: static;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.desktop-second-message-rightSection.active {
+    display: flex !important;
+}
+
+.desktopBackToMessagesBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0 0.75rem;
+    padding: 0.45rem 1.2rem;
+    border: none;
+    background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+    color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+    cursor: pointer;
+    font-size: 1.05rem;
+    transition: background 0.3s;
+}
+
+.desktopBackToMessagesBtn:hover {
+    background: linear-gradient(90deg, #2196F3 0%, #4CAF50 100%);
+}
+
+.desktopChatHeader {
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(to bottom, #FFF8F0, white);
+    flex-shrink: 0;
+}
+
+.desktopChatHeader img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FF6500;
+}
+
+.desktopChatHeader h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.desktopChatHeader p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.desktopChatArea {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.desktopChatMessages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.desktopChatInput {
+    padding: 1rem 1.5rem;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    gap: 0.8rem;
+    background: white;
+    flex-shrink: 0;
+}
+
+.desktopChatInput input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.desktopChatInput input:focus {
+    border-color: #FFAD60;
+    box-shadow: 0 0 0 3px rgba(255, 173, 96, 0.1);
+}
+
+.desktopChatInput button {
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, #FF6500, #FFAD60);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.desktopChatInput button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 101, 0, 0.3);
+}
+
+.desktop-second-message-rightSection {
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    .dashboardContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .desktop-second-message-rightSection {
+        height: 100%;
+        width: 38vw;
+        max-width: 520px;
+        min-width: 340px;
+        /* Remove absolute positioning for flex child */
+        position: static;
+        z-index: auto;
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .desktop-second-message-rightSection.active {
+        display: flex !important;
+    }
+
+    .desktopChatArea {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        max-height: calc(100vh - 90px);
+        overflow: hidden;
+    }
+
+    .desktopChatMessages {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        min-height: 0;
+        max-height: calc(100vh - 210px);
+    }
+}
+
 /* General Styles */
 * {
     box-sizing: border-box;
@@ -483,6 +809,7 @@ body {
 .rightSection .rightPanel {
     display: none;
 }
+
 .rightSection .rightPanel.active {
     display: flex;
 }
@@ -551,12 +878,36 @@ body {
     display: flex;
     gap: 0.8rem;
     transition: all 0.3s;
-.notification-rightSection {
-    display: flex;
-}
-.message-rightSection {
-    display: block;
-}
+
+    .notification-rightSection {
+        display: flex;
+    }
+
+    .message-rightSection {
+        display: block;
+    }
+
+    .second-message-rightSection {
+        display: none;
+    }
+
+    @media (min-width: 1025px) {
+
+        .message-rightSection,
+        .second-message-rightSection {
+            height: 100%;
+            width: 100%;
+        }
+
+        .message-rightSection.active {
+            display: block !important;
+        }
+
+        .second-message-rightSection.active {
+            display: block !important;
+        }
+    }
+
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 

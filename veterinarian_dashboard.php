@@ -182,6 +182,39 @@ $schedules_result = $schedule_stmt->get_result();
         }
     });
     </script>
+
+    // Ensure desktop Back to Messages button always works
+    document.addEventListener('DOMContentLoaded', function() {
+        function attachDesktopBackBtn() {
+            var btn = document.querySelector('.desktopBackToMessagesBtn');
+            if (btn) {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    if (typeof desktopBackToMessagesPanel === 'function') desktopBackToMessagesPanel();
+                };
+            }
+        }
+        attachDesktopBackBtn();
+        // In case the button is re-rendered, observe DOM changes
+        var observer = new MutationObserver(attachDesktopBackBtn);
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+
+    // Ensure only one message panel is visible on desktop at page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth > 1024) {
+            var msgPanel = document.querySelector('.message-rightSection');
+            var chatPanel = document.querySelector('.desktop-second-message-rightSection');
+            if (msgPanel) {
+                msgPanel.style.display = 'block';
+                msgPanel.classList.add('active');
+            }
+            if (chatPanel) {
+                chatPanel.style.display = 'none';
+                chatPanel.classList.remove('active');
+            }
+        }
+    });
 </head>
 <body>
     <div class="navbar">
@@ -333,7 +366,35 @@ $schedules_result = $schedule_stmt->get_result();
                 </div>
             </div>
         </div>
-        <!-- The second-message-rightSection is now only rendered in the mobile popup below -->
+        <!-- Second message panel for desktop (hidden by default, shown when a conversation is open) -->
+        <div class="desktop-second-message-rightSection" style="display: none;">
+            <div id="desktopSecondMessagesPanel" class="rightPanel active">
+                <button class="desktopBackToMessagesBtn" onclick="desktopBackToMessagesPanel();" style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin: 0.75rem 0 0 0.75rem;
+                    padding: 0.45rem 1.2rem;
+                    border: none;
+                    background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+                    color: #fff;
+                    border-radius: 24px;
+                    box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+                    cursor: pointer;
+                    font-size: 1.05rem;">
+                    ← Back to Messages
+                </button>
+                <div class="desktopChatHeader"></div>
+                <div class="desktopChatArea">
+                    <div class="desktopChatMessages" id="desktopChatMessages"></div>
+                    <div class="desktopChatInput">
+                        <input type="text" id="desktopMessageInput" placeholder="Type a message...">
+                        <button onclick="desktopSendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- The desktop-second-message-rightSection is now only for desktop above -->
     </div>
 
     <!-- Side pop-up -->
